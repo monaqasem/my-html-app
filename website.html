@@ -1,0 +1,136 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petra Virtual Guide</title>
+    <style>
+        body {
+            background-color: #D19C6C; /* Petra Sandstone Color */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+        button {
+            background-color: #A0522D;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #8B4513;
+        }
+        .hidden {
+            display: none;
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-top: 10px;
+        }
+        .rating {
+            display: flex;
+            justify-content: center;
+        }
+        .star {
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Your Language</h1>
+        <button onclick="showInfo('ar')">العربية</button>
+        <button onclick="showInfo('en')">English</button>
+        
+        <div id="info" class="hidden">
+            <p id="text"></p>
+            <button onclick="nextStep()">Next</button>
+        </div>
+
+        <div id="memory" class="hidden">
+            <p>Save a memory</p>
+            <button onclick="startCountdown()">📸 Take a Picture</button>
+            <p id="countdown"></p>
+            <button class="hidden" id="emailBtn" onclick="showEmailInput()">Send to Email</button>
+        </div>
+
+        <div id="emailSection" class="hidden">
+            <input type="email" id="email" placeholder="Enter your email">
+            <button onclick="sendEmail()">Send</button>
+        </div>
+
+        <div id="ratingSection" class="hidden">
+            <p>Rate Your Experience</p>
+            <div class="rating">
+                <span class="star" onclick="rate(1)">★</span>
+                <span class="star" onclick="rate(2)">★</span>
+                <span class="star" onclick="rate(3)">★</span>
+                <span class="star" onclick="rate(4)">★</span>
+                <span class="star" onclick="rate(5)">★</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showInfo(lang) {
+            document.getElementById('info').classList.remove('hidden');
+            document.getElementById('text').innerText = lang === 'ar' 
+                ? "هنا كان الأنباط يشربون قهوتهم في ذلك الوقت."
+                : "This is where the Nabataeans drank their coffee at that time.";
+        }
+
+        function nextStep() {
+            document.getElementById('info').classList.add('hidden');
+            document.getElementById('memory').classList.remove('hidden');
+        }
+
+        function startCountdown() {
+            let count = 3;
+            let countdownElem = document.getElementById('countdown');
+            countdownElem.innerText = count;
+            let interval = setInterval(() => {
+                count--;
+                countdownElem.innerText = count;
+                if (count === 0) {
+                    clearInterval(interval);
+                    countdownElem.innerText = "📸 Picture Taken!";
+                    document.getElementById('emailBtn').classList.remove('hidden');
+                }
+            }, 1000);
+        }
+
+        function showEmailInput() {
+            document.getElementById('emailSection').classList.remove('hidden');
+        }
+
+        function sendEmail() {
+            let email = document.getElementById('email').value;
+            alert("Memory sent to " + email);
+            document.getElementById('ratingSection').classList.remove('hidden');
+        }
+
+        function rate(stars) {
+            alert("You rated " + stars + " stars!");
+        }
+    </script>
+</body>
+</html>
+
